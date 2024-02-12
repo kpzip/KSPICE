@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.TreeSet;
 
-import javax.annotation.Nullable;
-
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.DecompositionSolver;
@@ -25,7 +23,6 @@ public sealed class Circuit permits Subcircuit {
 	//Positive Current is determined to flow from high id nodes to low id nodes
 	protected TreeSet<ConnectionPoint> connectionPoints;
 	protected ArrayList<Component> components;
-	@Nullable
 	private ConnectionPoint ground;
 	private int connectionPointIndex = 1;
 	
@@ -160,6 +157,7 @@ public sealed class Circuit permits Subcircuit {
 		return c;
 	}
 	
+	//May return null
 	public ConnectionPoint getGround() {
 		return ground;
 	}

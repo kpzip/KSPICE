@@ -11,6 +11,9 @@ plugins {
     id 'java-library'
 }
 
+archivesBaseName = project.archives_base_name
+version = project.version
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -30,6 +33,12 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+jar {
+	from("LICENSE.md") {
+		rename { "${it}_${project.archivesBaseName}"}
+	}
 }
 
 tasks.named('test') {
