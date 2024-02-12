@@ -37,7 +37,7 @@ java {
 
 jar {
 	from("LICENSE.md") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}"}
 	}
 }
 
