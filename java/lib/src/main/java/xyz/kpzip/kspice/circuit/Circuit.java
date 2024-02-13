@@ -15,6 +15,14 @@ import org.apache.commons.math3.linear.RealVector;
 import xyz.kpzip.kspice.components.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 
+/**
+ * Represents an electronic circuit.
+ * Components can be added with addComponent(Component c), and new connection points can be made with createConnectionPoint().
+ * To simulate, call simulationStep(double dt)
+ * 
+ * @author kpzip
+ *
+ */
 public sealed class Circuit permits Subcircuit {
 	
 	public static boolean DEBUG = false;
