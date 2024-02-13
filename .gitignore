@@ -6,3 +6,4 @@ lib/build
 .perfs
 .settings/
 .classpath
+.project
