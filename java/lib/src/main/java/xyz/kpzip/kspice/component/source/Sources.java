@@ -1,6 +1,6 @@
-package xyz.kpzip.kspice.components.source;
+package xyz.kpzip.kspice.component.source;
 
-import xyz.kpzip.kspice.components.BiNodeComponentSupplier;
+import xyz.kpzip.kspice.component.BiNodeComponentSupplier;
 import xyz.kpzip.kspice.util.math.Function;
 
 public final class Sources {

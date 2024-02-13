@@ -12,7 +12,7 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import xyz.kpzip.kspice.components.Component;
+import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 
 /**

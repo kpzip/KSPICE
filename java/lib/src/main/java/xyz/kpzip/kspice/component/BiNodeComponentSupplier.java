@@ -1,4 +1,4 @@
-package xyz.kpzip.kspice.components;
+package xyz.kpzip.kspice.component;
 
 import java.util.function.BiFunction;
 

@@ -1,4 +1,4 @@
-package xyz.kpzip.kspice.components.source;
+package xyz.kpzip.kspice.component.source;
 
 //Indicates the source can be modified with time
 public interface MutableSource {

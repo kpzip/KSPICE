@@ -1,7 +1,7 @@
-package xyz.kpzip.kspice.components.passive;
+package xyz.kpzip.kspice.component.passive;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.components.Abstract2NodeComponent;
+import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
 public class Resistor extends Abstract2NodeComponent {
 

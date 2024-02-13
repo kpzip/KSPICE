@@ -1,11 +1,11 @@
-package xyz.kpzip.kspice.components;
+package xyz.kpzip.kspice.component;
 
 import xyz.kpzip.kspice.circuit.ConnectionPointPair;
 
 /**
  * Represents a component in a logical circuit designed for constraint solving.
  * Implementations are required to store a reference to each connection point they connect to, and a current value for each internal path.
- * @see Resistor
+ * @see xyz.kpzip.kspice.component
  * @see Capacitor
  * @see Abstract2NodeComponent
  * @author kpzip

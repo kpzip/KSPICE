@@ -1,4 +1,4 @@
-package xyz.kpzip.kspice.components.passive;
+package xyz.kpzip.kspice.component.passive;
 
 //TODO
 public class Xtal {

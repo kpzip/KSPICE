@@ -1,6 +1,6 @@
 package xyz.kpzip.kspice.circuit;
 
-import xyz.kpzip.kspice.components.Component;
+import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 
 public non-sealed class Subcircuit extends Circuit implements Component {

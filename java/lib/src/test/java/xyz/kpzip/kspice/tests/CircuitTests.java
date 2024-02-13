@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.components.passive.Resistor;
-import xyz.kpzip.kspice.components.source.Battery;
+import xyz.kpzip.kspice.component.passive.Resistor;
+import xyz.kpzip.kspice.component.source.Battery;
 
 final class CircuitTests {
 	

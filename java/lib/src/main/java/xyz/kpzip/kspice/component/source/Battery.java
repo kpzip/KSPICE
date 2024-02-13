@@ -1,4 +1,4 @@
-package xyz.kpzip.kspice.components.source;
+package xyz.kpzip.kspice.component.source;
 
 import xyz.kpzip.kspice.circuit.Circuit;
 

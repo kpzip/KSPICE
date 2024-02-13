@@ -1,4 +1,4 @@
-package xyz.kpzip.kspice.components;
+package xyz.kpzip.kspice.component;
 
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.circuit.ConnectionPointPair;

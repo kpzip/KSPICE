@@ -1,7 +1,7 @@
-package xyz.kpzip.kspice.components.switches;
+package xyz.kpzip.kspice.component.switches;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.components.Abstract2NodeComponent;
+import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
 public class SPSTSwitch extends Abstract2NodeComponent {
 	

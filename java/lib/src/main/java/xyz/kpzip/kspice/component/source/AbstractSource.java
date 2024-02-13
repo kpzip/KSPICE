@@ -1,7 +1,7 @@
-package xyz.kpzip.kspice.components.source;
+package xyz.kpzip.kspice.component.source;
 
 import xyz.kpzip.kspice.circuit.Circuit.ConnectionPoint;
-import xyz.kpzip.kspice.components.Abstract2NodeComponent;
+import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
 public abstract class AbstractSource extends Abstract2NodeComponent {
 
