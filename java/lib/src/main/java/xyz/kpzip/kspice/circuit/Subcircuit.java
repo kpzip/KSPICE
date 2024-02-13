@@ -1,9 +1,11 @@
 package xyz.kpzip.kspice.circuit;
 
 import xyz.kpzip.kspice.components.Component;
+import xyz.kpzip.kspice.util.ArrayBuilder;
 
 public non-sealed class Subcircuit extends Circuit implements Component {
 
+	//Don't create a ground node
 	public Subcircuit() {
 		super(false);
 	}
@@ -20,8 +22,9 @@ public non-sealed class Subcircuit extends Circuit implements Component {
 
 	@Override
 	public ConnectionPointPair[] connections() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayBuilder<ConnectionPointPair> connections = new ArrayBuilder<ConnectionPointPair>(ConnectionPointPair.class);
+		for (Component c : components) connections.pushArray(c.connections());
+		return connections.toArray();
 	}
 
 	@Override
@@ -33,7 +36,6 @@ public non-sealed class Subcircuit extends Circuit implements Component {
 	@Override
 	public void updateCurrent(double[] currents) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
