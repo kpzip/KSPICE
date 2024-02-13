@@ -5,9 +5,9 @@ import xyz.kpzip.kspice.circuit.ConnectionPointPair;
 /**
  * Represents a component in a logical circuit designed for constraint solving.
  * Implementations are required to store a reference to each connection point they connect to, and a current value for each internal path.
- * @see xyz.kpzip.kspice.component
- * @see Capacitor
- * @see Abstract2NodeComponent
+ * @see xyz.kpzip.kspice.component.passive.Resistor
+ * @see xyz.kpzip.kspice.component.passive.Capacitor
+ * @see xyz.kpzip.kspice.component.Abstract2NodeComponent
  * @author kpzip
  *
  */
@@ -54,8 +54,8 @@ public interface Component {
 	
 	/**
 	 * Used to update this component's differential values, for those which use an Euler approximation.
-	 * @see Capacitor
-	 * @see Inductor
+	 * @see xyz.kpzip.kspice.component.passive.Capacitor#differential(double)
+	 * @see xyz.kpzip.kspice.component.passive.Inductor#differential(double)
 	 * @param dt - the time elapsed in the previous simulation step.
 	 */
 	default void differential(double dt) {};
