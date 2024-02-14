@@ -23,5 +23,15 @@ final class CircuitTests {
     	c.simulationStep(0);
     	assertEquals(1.0, r.getCurrent());
 	}
+	
+	@Test
+	public void transistorTest() {
+		Circuit c = new Circuit();
+		Circuit.ConnectionPoint collector = c.createConnectionPoint();
+		Circuit.ConnectionPoint base = c.createConnectionPoint();
+		Circuit.ConnectionPoint emitter = c.getGround();
+		Battery b1 = new Battery(base, emitter, 0.7);
+		
+	}
 
 }

@@ -3,6 +3,12 @@ package xyz.kpzip.kspice.component.passive;
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
+/**
+ * Represents an inductor. Stores inducatance and flux information.
+ * Inductance is immutable
+ * @author kpzip
+ *
+ */
 public class Inductor extends Abstract2NodeComponent {
 	
 	private final double inductance;
