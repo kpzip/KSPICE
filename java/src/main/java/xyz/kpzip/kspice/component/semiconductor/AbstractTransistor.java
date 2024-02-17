@@ -41,12 +41,12 @@ public abstract class AbstractTransistor implements Component {
 	public double[] constraints() {
 		//						Ic   Ib					Vc   Vb				constant
 		return base.getVoltage() - emitter.getVoltage() < beginningThreshold() ?
-				new double [] {	1.0, -currentGain, 		0.0, 0.0, 			0.0,
+				new double [] {	ce(), be(), 		0.0, 0.0, 			0.0,
 								0.0, 1.0,				0.0, 0.0,			0.0} :
 				(base.getVoltage() - emitter.getVoltage() < endThreshold() ? 
-				new double [] {	1.0, -currentGain, 		0.0, 0.0, 			0.0,
+				new double [] {	ce(), be(), 		0.0, 0.0, 			0.0,
 								0.0, 1.0,				0.0, -IVslope(),	-IVslope() * endThreshold()} : 
-				new double [] {	1.0, -currentGain, 		0.0, 0.0, 			0.0,
+				new double [] {	ce(), be(), 		0.0, 0.0, 			0.0,
 								0.0, 1.0,				0.0, 0.0,			getEndCurrent()});		
 	}
 
@@ -60,6 +60,22 @@ public abstract class AbstractTransistor implements Component {
 	public void reset() {
 		collectorEmitterCurrent = 0;
 		baseEmitterCurrent = 0;
+	}
+	
+	public boolean isCollectorEmitterReversed() {
+		return collector.compareTo(emitter) < 0;
+	}
+	
+	public boolean isBaseEmitterReversed() {
+		return base.compareTo(emitter) < 0;
+	}
+	
+	public double ce() {
+		return isCollectorEmitterReversed() ? 1.0 : -1.0;
+	}
+	
+	public double be() {
+		return isBaseEmitterReversed() ? -currentGain : currentGain;
 	}
 	
 	public double getCollectorCurrent() {

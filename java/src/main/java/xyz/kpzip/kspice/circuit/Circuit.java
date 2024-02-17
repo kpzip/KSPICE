@@ -53,9 +53,14 @@ public sealed class Circuit permits Subcircuit {
 	
 	public void simulationStep(double dt) {
 		
-		int numVoltages = connectionPoints.size();
-		int numCurrents = components.stream().mapToInt((c) -> c.connectionCount()).sum();
-		int numToSolveFor = numVoltages + numCurrents;
+		final int numVoltages = connectionPoints.size();
+		final int numCurrents = components.stream().mapToInt((c) -> c.connectionCount()).sum();
+		final int numToSolveFor = numVoltages + numCurrents;
+		
+		if (DEBUG) {
+			System.out.println("Voltages: " + numVoltages);
+			System.out.println("Currents: " + numCurrents);
+		}
 		
 		//The matrix representing the coefficients in the system
 		double [] [] matrix = new double[numToSolveFor] [numToSolveFor];
@@ -68,22 +73,29 @@ public sealed class Circuit permits Subcircuit {
 
 		for (Component c : components) {
 			
+			//Unpack data
 			ConnectionPointPair[] connections = c.connections();
 			double[] constraints = c.constraints();
+			int currConnection = 0;
 			
+			//Create an equation for each connection point
 			for (int i = 0; i < connections.length; i++) {
 				
 				double[] coefficients = new double[numToSolveFor];
 				
 				int currentDependenceIndex = (2 * c.connectionCount() + 1) * i;
 				int voltageDependenceIndex = currentDependenceIndex + c.connectionCount();
-				double constantDependence = constraints[3*i + 2 * c.connectionCount()];
+				double constantDependence = constraints[/* 3*i +  ?????? */ 2 * c.connectionCount() + i * (2 * c.connectionCount() + 1)];
 				
 				//Add all of the constraints to the equation
+				//Add dependents on each connection's current and voltage
 				for (int j = 0; j < connections.length; j++) {
 					ConnectionPointPair connection = connections[j];
 					
-					coefficients[componentConnectionIndex + j] = constraints[currentDependenceIndex + j];
+					//set current data
+					coefficients[(componentConnectionIndex - currConnection) + j] = constraints[currentDependenceIndex + j];
+					
+					//Set it so the voltage across is equal to the voltage of the first one minus the voltage of the second one
 					coefficients[numCurrents + connection.first.id] += constraints[voltageDependenceIndex + j];
 					coefficients[numCurrents + connection.second.id] += -constraints[voltageDependenceIndex + j];
 				}
@@ -92,6 +104,7 @@ public sealed class Circuit permits Subcircuit {
 				matrix[componentConnectionIndex] = coefficients;
 				
 				componentConnectionIndex++;
+				currConnection++;
 			}
 		}
 		
