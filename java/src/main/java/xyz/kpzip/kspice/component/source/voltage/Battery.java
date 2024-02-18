@@ -1,6 +1,7 @@
-package xyz.kpzip.kspice.component.source;
+package xyz.kpzip.kspice.component.source.voltage;
 
 import xyz.kpzip.kspice.circuit.Circuit;
+import xyz.kpzip.kspice.component.source.AbstractSource;
 
 public class Battery extends AbstractSource {
 

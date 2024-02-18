@@ -1,6 +1,6 @@
 package xyz.kpzip.kspice.component;
 
-import xyz.kpzip.kspice.circuit.ConnectionPointPair;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component in a logical circuit designed for constraint solving.
@@ -42,7 +42,7 @@ public interface Component {
 	 * the returned value should contain, in order the current dependences of the first equation in order of the connections returned by
 	 * connections(), the voltage difference dependencies in order of the connections returned by connections(), and the constant dependence for each equation.
 	 * the number of equations must be equal to the return value of connectionCount()
-	 * @implSpec the length of the returned array must be equal to the (c = the last returned value of connections()) c(2c + 1).
+	 * @implSpec the length of the returned array must be equal to the (c = the last returned value of connectionCount()) c(2c + 1).
 	 * @return the coefficients used to solve for this component
 	 */
 	double[] constraints();

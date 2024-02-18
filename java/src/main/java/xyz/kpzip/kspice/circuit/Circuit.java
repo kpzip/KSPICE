@@ -12,6 +12,7 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 
@@ -223,7 +224,7 @@ public sealed class Circuit permits Subcircuit {
 		return connectionPoints;
 	}
 	
-	public class ConnectionPoint implements Comparable<ConnectionPoint> {
+	public final class ConnectionPoint implements Comparable<ConnectionPoint> {
 		
 		//id 0 is ground, negative is not part of the circuit
 		private int id;

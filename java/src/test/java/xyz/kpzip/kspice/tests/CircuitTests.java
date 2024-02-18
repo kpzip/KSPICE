@@ -10,7 +10,7 @@ import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.component.passive.Resistor;
 import xyz.kpzip.kspice.component.semiconductor.AbstractTransistor;
 import xyz.kpzip.kspice.component.semiconductor.TransistorType;
-import xyz.kpzip.kspice.component.source.Battery;
+import xyz.kpzip.kspice.component.source.voltage.Battery;
 
 final class CircuitTests {
 	

@@ -3,13 +3,18 @@ package xyz.kpzip.kspice.component.switches;
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
-public class SPSTSwitch extends Abstract2NodeComponent {
+/**
+ * a single-pull single-throw switch.
+ * 
+ * @author kpzip
+ *
+ */
+public class SPSTSwitch extends Abstract2NodeComponent implements Switch {
 	
 	private boolean on;
 
 	public SPSTSwitch(Circuit.ConnectionPoint first, Circuit.ConnectionPoint second) {
-		super(first, second);
-		on = false;
+		this(first, second, false);
 	}
 	
 	public SPSTSwitch(Circuit.ConnectionPoint first, Circuit.ConnectionPoint second, boolean on) {
@@ -32,20 +37,29 @@ public class SPSTSwitch extends Abstract2NodeComponent {
 		return 0;
 	}
 	
+	@Override
 	public boolean isOn() {
 		return on;
 	}
 	
+	@Override
 	public void toggle() {
 		on ^= on;
 	}
 	
+	@Override
 	public void setOn(boolean on) {
 		this.on = on;
 	}
 	
+	@Override
 	public void setOn() {
 		this.on = true;
+	}
+	
+	@Override
+	public void setOff() {
+		this.on = false;
 	}
 
 }

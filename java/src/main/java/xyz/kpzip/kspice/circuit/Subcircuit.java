@@ -1,5 +1,6 @@
 package xyz.kpzip.kspice.circuit;
 
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 

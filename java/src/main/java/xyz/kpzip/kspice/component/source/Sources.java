@@ -1,6 +1,8 @@
 package xyz.kpzip.kspice.component.source;
 
 import xyz.kpzip.kspice.component.BiNodeComponentSupplier;
+import xyz.kpzip.kspice.component.source.voltage.Battery;
+import xyz.kpzip.kspice.component.source.voltage.ImmutableFunctionSource;
 import xyz.kpzip.kspice.util.math.Function;
 
 public final class Sources {

@@ -1,7 +1,7 @@
 package xyz.kpzip.kspice.component;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.circuit.ConnectionPointPair;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component with 2 connections.
@@ -10,7 +10,7 @@ import xyz.kpzip.kspice.circuit.ConnectionPointPair;
  * @see xyz.kpzip.kspice.component.passive.Capacitor
  * @see xyz.kpzip.kspice.component.passive.Inductor
  * @see xyz.kpzip.kspice.component.source.AbstractSource
- * @see xyz.kpzip.kspice.component.source.Battery
+ * @see xyz.kpzip.kspice.component.source.voltage.Battery
  * @author kpzip
  *
  */
