@@ -1,32 +1,46 @@
+use super::components::component::Component;
+use std::collections::BTreeSet;
+use std::sync::Arc;
+use std::sync::Mutex;
+
 pub struct Circuit<'a> {
-    connection_points: Vec<ConnectionPoint<'a>>,
+    connection_points: Mutex<BTreeSet<ConnectionPoint<'a>>>,
+    components: Mutex<Vec<Box<dyn Component<'a>>>>,
     ground: Option<&'a ConnectionPoint<'a>>,
-    connection_point_counter: u32,
+    connection_point_counter: Mutex<u32>,
 }
 
 impl<'a> Circuit<'a> {
-    pub fn new() -> Circuit<'a> {
-        let mut circuit: Circuit = Circuit {
-            connection_point_counter: 0,
-            connection_points: Vec::new(),
+    pub fn new() -> Arc<Circuit<'a>> {
+        let circuit: Arc<Circuit> = Arc::new(Circuit {
+            connection_point_counter: Mutex::new(0),
+            components: Mutex::new(Vec::new()),
+            connection_points: Mutex::new(BTreeSet::new()),
             ground: None,
-        };
+        });
 
         let ground: ConnectionPoint = ConnectionPoint {
             id: 0,
             voltage: 0.0,
-            circuit: &mut circuit as *mut Circuit,
+            circuit: circuit.clone(),
         };
 
-        circuit.connection_points.push(ground);
+        circuit.connection_points.lock().unwrap().insert(ground);
 
         circuit
     }
 
-    fn new_connection_point(&mut self) -> &'a ConnectionPoint<'a> {
+    fn new_connection_point(circuit: &'a Arc<Circuit<'a>>) -> &'a ConnectionPoint<'a> {
+        circuit
+            .connection_points
+            .lock()
+            .unwrap()
+            .insert(ConnectionPoint::new(circuit.clone()));
+        //unsafe block here bypasses the Mutex on connection_points. This is fine since this is a
+        //read only reference and it is guaranteed to not live longer than at least one Arc<Circuit>
         unsafe {
-            self.connection_points.push(ConnectionPoint::new(self));
-            self.connection_points.last().unwrap()
+            &*(circuit.connection_points.lock().unwrap().last().unwrap()
+                as *const ConnectionPoint<'a>)
         }
     }
 }
@@ -34,20 +48,28 @@ impl<'a> Circuit<'a> {
 pub struct ConnectionPoint<'a> {
     id: u32,
     voltage: f64,
-    circuit: *mut Circuit<'a>,
+    circuit: Arc<Circuit<'a>>,
 }
 
 impl<'a> ConnectionPoint<'a> {
-    unsafe fn new(circuit: &'a mut Circuit<'a>) -> ConnectionPoint<'a> {
-        circuit.connection_point_counter = circuit.connection_point_counter + 1;
+    fn new(circuit: Arc<Circuit<'a>>) -> ConnectionPoint<'a> {
+        *circuit.connection_point_counter.lock().unwrap() += 1;
         ConnectionPoint {
-            id: circuit.connection_point_counter,
+            id: *circuit.connection_point_counter.lock().unwrap(),
             voltage: 0.0,
-            circuit: circuit as *mut Circuit<'a>,
+            circuit: circuit.clone(),
         }
     }
 
-    unsafe fn get_circuit(&mut self) -> &mut Circuit<'a> {
-        &mut *self.circuit
+    fn get_circuit(&self) -> Arc<Circuit<'a>> {
+        self.circuit.clone()
+    }
+}
+
+impl PartialEq for ConnectionPoint<'_> {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id
+            && self.circuit.as_ref() as *const Circuit<'_>
+                == other.circuit.as_ref() as *const Circuit<'_>
     }
 }

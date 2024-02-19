@@ -1,17 +1,17 @@
 use super::super::circuit::ConnectionPoint;
 
 pub trait Component<'a> {
-    fn connection_point_count() -> u32;
+    fn connection_point_count(&self) -> u32;
 
-    fn connection_count() -> u32;
+    fn connection_count(&self) -> u32;
 
-    fn connections() -> Vec<(ConnectionPoint<'a>, ConnectionPoint<'a>)>;
+    fn connections(&self) -> Vec<(&'a ConnectionPoint<'a>, &'a ConnectionPoint<'a>)>;
 
-    fn constraints() -> Vec<f64>;
+    fn constraints(&self) -> Vec<f64>;
 
-    fn upade_current(currents: Vec<f64>);
+    fn upade_current(&mut self, currents: Vec<f64>);
 
-    fn differential(_dt: f64) {}
+    fn differential(&mut self, _dt: f64) {}
 
-    fn reset();
+    fn reset(&mut self);
 }
