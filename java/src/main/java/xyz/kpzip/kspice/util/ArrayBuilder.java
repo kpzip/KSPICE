@@ -3,9 +3,17 @@ package xyz.kpzip.kspice.util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Represents an array builder. Similar to a {@link java.lang.StringBuilder StringBuilder} 
+ * since it allows arrays to be added and them converted to a larger array containing all sub arrays in sequence.
+ * Useful if you want to join together a bunch of small arrays in a somewhat efficient manner.
+ * 
+ * @author kpzip
+ * 
+ * @param <T> The type of elements stored in the arrays to be joined. If you wanted to join a bunch of Integer arrays, T would be Integer
+ */
 public class ArrayBuilder<T> {
 
 	private List<T[]> arrays;
@@ -13,11 +21,22 @@ public class ArrayBuilder<T> {
 	//seriously, this makes me want to quit java for good
 	private Class<T> tclass;
 	
+	/**
+	 * creates a new, empty array builder with the default initial capacity.
+	 * @param tclass - the class of the type parameter T. This is required to make a new array of type T. If you wanted to join String arrays, 
+	 * this would be equal to String.getClass()
+	 */
 	public ArrayBuilder(Class<T> tclass) {
-		arrays = new LinkedList<T[]>();
+		arrays = new ArrayList<T[]>();
 		this.tclass = tclass;
 	}
 	
+	/**
+	 * creates a new, empty array builder with the specified initial capacity. Use if you know how many arrays you plan to join.
+	 * @param tclass - the class of the type parameter T. This is required to make a new array of type T. If you wanted to join String arrays, 
+	 * this would be equal to String.getClass()
+	 * @param capacity - the initial capacity of this ArrayBuilder.
+	 */
 	public ArrayBuilder(Class<T> tclass, int capacity) {
 		arrays = new ArrayList<T[]>(capacity);
 		this.tclass = tclass;

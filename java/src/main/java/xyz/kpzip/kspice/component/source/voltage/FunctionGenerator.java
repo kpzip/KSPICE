@@ -1,10 +1,9 @@
 package xyz.kpzip.kspice.component.source.voltage;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.component.source.AbstractSource;
 import xyz.kpzip.kspice.util.math.Function;
 
-public class FunctionGenerator<F extends Function> extends AbstractSource {
+public class FunctionGenerator<F extends Function> extends VoltageSource {
 
 	private double t;
 	private F fn;
@@ -41,7 +40,7 @@ public class FunctionGenerator<F extends Function> extends AbstractSource {
 	}
 
 	@Override
-	public double getSourceVoltage() {
+	public double getSourceValue() {
 		return fn.sample(t);
 	}
 	

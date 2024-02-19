@@ -52,7 +52,7 @@ final class CircuitTests {
 
 			@Override
 			public double getEndCurrent() {
-				return 0.05;
+				return 0.005;
 			}
 
 			@Override

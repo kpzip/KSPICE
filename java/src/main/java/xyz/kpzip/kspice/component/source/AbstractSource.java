@@ -20,18 +20,8 @@ public abstract class AbstractSource extends Abstract2NodeComponent {
 	}
 
 	@Override
-	public final double currentDependence() {
-		return 0;
-	}
-
-	@Override
-	public final double voltageDependence() {
-		return 1;
-	}
-
-	@Override
 	public final double constantDependence() {
-		double v = getSourceVoltage();
+		double v = getSourceValue();
 		return isReversed() ? v : -v;
 	}
 	
@@ -50,6 +40,6 @@ public abstract class AbstractSource extends Abstract2NodeComponent {
 	 * Gets the voltage of this source.
 	 * @return - the voltage of this source in Volts
 	 */
-	public abstract double getSourceVoltage();
+	public abstract double getSourceValue();
 
 }

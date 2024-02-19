@@ -1,10 +1,9 @@
 package xyz.kpzip.kspice.component.source.voltage;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.component.source.AbstractSource;
 import xyz.kpzip.kspice.util.math.Function;
 
-public class ImmutableFunctionSource extends AbstractSource {
+public class ImmutableFunctionSource extends VoltageSource {
 	
 	private double t;
 	private final Function fn;
@@ -33,7 +32,7 @@ public class ImmutableFunctionSource extends AbstractSource {
 	}
 
 	@Override
-	public double getSourceVoltage() {
+	public double getSourceValue() {
 		return fn.sample(t);
 	}
 	

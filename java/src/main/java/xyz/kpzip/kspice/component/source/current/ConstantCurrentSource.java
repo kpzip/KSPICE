@@ -4,7 +4,6 @@
 package xyz.kpzip.kspice.component.source.current;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.component.Abstract2NodeComponent;
 
 /**
  * 
@@ -12,31 +11,36 @@ import xyz.kpzip.kspice.component.Abstract2NodeComponent;
  * This current source is immutable.
  * 
  * @author kpzip
- * TODO
+ * 
  */
-public class ConstantCurrentSource extends Abstract2NodeComponent {
+public class ConstantCurrentSource extends CurrentSource {
 
+	private final double currentValue;
+	
 	/**
-	 * 
+	 * Creates a new Constant current source.
+	 * @param first - the first connection point to connect this source to
+	 * @param second - the second connection point to connect this source to
+	 * @param value - the current that this source will generate in Amperes.
 	 */
-	public ConstantCurrentSource(Circuit.ConnectionPoint first, Circuit.ConnectionPoint second) {
+	public ConstantCurrentSource(Circuit.ConnectionPoint first, Circuit.ConnectionPoint second, final double value) {
 		super(first, second);
+		this.currentValue = value;
 	}
 
 	@Override
-	public double currentDependence() {
-		return 1.0d;
+	public double getSourceValue() {
+		return currentValue;
+	}
+	
+	/**
+	 * gets the value of the current that this source produces in Amps.
+	 * @return the currentValue
+	 */
+	public double getCurrentValue() {
+		return currentValue;
 	}
 
-	@Override
-	public double voltageDependence() {
-		return 0;
-	}
 
-	@Override
-	public double constantDependence() {
-
-		return 0;
-	}
 
 }

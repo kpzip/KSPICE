@@ -1,10 +1,9 @@
 package xyz.kpzip.kspice.component.source.voltage;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.component.source.AbstractSource;
 import xyz.kpzip.kspice.component.source.MutableSource;
 
-public class DCSupply extends AbstractSource implements MutableSource {
+public class DCSupply extends VoltageSource implements MutableSource {
 
 	private double voltage;
 
@@ -22,7 +21,7 @@ public class DCSupply extends AbstractSource implements MutableSource {
 	}
 
 	@Override
-	public double getSourceVoltage() {
+	public double getSourceValue() {
 		return voltage;
 	}
 

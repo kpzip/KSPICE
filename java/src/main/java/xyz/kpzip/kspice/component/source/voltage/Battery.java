@@ -1,9 +1,8 @@
 package xyz.kpzip.kspice.component.source.voltage;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.component.source.AbstractSource;
 
-public class Battery extends AbstractSource {
+public class Battery extends VoltageSource {
 
 	private final double emf;
 	
@@ -17,7 +16,7 @@ public class Battery extends AbstractSource {
 	}
 	
 	@Override
-	public double getSourceVoltage() {
+	public double getSourceValue() {
 		return emf;
 	}
 	
