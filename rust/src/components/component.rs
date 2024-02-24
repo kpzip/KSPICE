@@ -1,6 +1,7 @@
 use super::super::circuit::ConnectionPoint;
 
-pub trait Component<'a> {
+//Requires send and sync since components need to be shared amongst threads
+pub trait Component<'a>: Send + Sync {
     fn connection_point_count(&self) -> u32;
 
     fn connection_count(&self) -> u32;
