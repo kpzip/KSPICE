@@ -1,8 +1,8 @@
 package xyz.kpzip.kspice.component.semiconductor;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
+import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 public abstract class AbstractTransistor implements Component {
 	
@@ -34,7 +34,7 @@ public abstract class AbstractTransistor implements Component {
 
 	@Override
 	public ConnectionPointPair[] connections() {
-		return new ConnectionPointPair[] {new ConnectionPointPair(collector, emitter), new ConnectionPointPair(base, emitter)};
+		return new ConnectionPointPair[] {new ConnectionPointPair(collector, emitter, this), new ConnectionPointPair(base, emitter, this)};
 	}
 
 	@Override

@@ -5,6 +5,7 @@ package xyz.kpzip.kspice.component.passive;
 
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.component.Abstract2NodeComponent;
+import xyz.kpzip.kspice.optimizer.OptimizeableComponent;
 
 /**
  * 
@@ -14,7 +15,7 @@ import xyz.kpzip.kspice.component.Abstract2NodeComponent;
  * @author kpzip
  * 
  */
-public class Wire extends Abstract2NodeComponent {
+public class Wire extends Abstract2NodeComponent implements OptimizeableComponent {
 
 	/**
 	 * Creates a new wire that connects two points in the circuit.

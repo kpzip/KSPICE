@@ -12,9 +12,9 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
+import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents an electronic circuit.
@@ -97,8 +97,8 @@ public sealed class Circuit permits Subcircuit {
 					coefficients[(componentConnectionIndex - currConnection) + j] = constraints[currentDependenceIndex + j];
 					
 					//Set it so the voltage across is equal to the voltage of the first one minus the voltage of the second one
-					coefficients[numCurrents + connection.first.id] += constraints[voltageDependenceIndex + j];
-					coefficients[numCurrents + connection.second.id] += -constraints[voltageDependenceIndex + j];
+					coefficients[numCurrents + getConnectionPointPosition(connection.first)] += constraints[voltageDependenceIndex + j];
+					coefficients[numCurrents + getConnectionPointPosition(connection.second)] += -constraints[voltageDependenceIndex + j];
 				}
 				
 				constants[componentConnectionIndex] = constantDependence;
@@ -182,6 +182,10 @@ public sealed class Circuit permits Subcircuit {
 	//May return null
 	public ConnectionPoint getGround() {
 		return ground;
+	}
+	
+	public int getConnectionPointPosition(ConnectionPoint p) {
+		return connectionPoints.contains(p) ? connectionPoints.headSet(p).size() : -1;
 	}
 	
 	public void reset() {

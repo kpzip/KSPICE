@@ -7,6 +7,7 @@ import xyz.kpzip.kspice.circuit.Circuit.ConnectionPoint;
 import xyz.kpzip.kspice.component.source.AbstractSource;
 
 /**
+ * Represents a source which produces some amount of current, and whose voltage is determined by other circuit elements
  * 
  * @author kpzip
  * 

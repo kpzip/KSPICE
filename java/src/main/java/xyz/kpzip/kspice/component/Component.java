@@ -1,6 +1,6 @@
 package xyz.kpzip.kspice.component;
 
-import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
+import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component in a logical circuit designed for constraint solving.
@@ -33,6 +33,7 @@ public interface Component {
 	 * e.g. a resistor would return an array of length 1 containing both pins as a pair, while a transistor would return
 	 * an array of length 2 containing the base and the emitter as a pair as well as the collector and the emitter as a pair.
 	 * @implSpec the length of the returned array must be equal to the last returned value of connectionCount()
+	 * and the return value must not change based on the "state" of the component. e.g. a SPDT switch must always have 2 connections.
 	 * @return the connections inside of this component
 	 */
 	ConnectionPointPair[] connections();

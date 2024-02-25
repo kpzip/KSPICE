@@ -19,7 +19,7 @@ final class CircuitTests {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CircuitTests.class);
 
 	@Test
-	public void lightTest() {
+	void lightTest() {
 		Circuit c = new Circuit();
     	Circuit.ConnectionPoint v = c.createConnectionPoint();
     	Battery b = new Battery(c.getGround(), v, 10.0);
@@ -31,7 +31,7 @@ final class CircuitTests {
 	}
 	
 	@Test
-	public void transistorTest() {
+	void transistorTest() {
 		Circuit c = new Circuit();
 		Circuit.ConnectionPoint collector = c.createConnectionPoint();
 		Circuit.ConnectionPoint base = c.createConnectionPoint();
@@ -73,5 +73,7 @@ final class CircuitTests {
 		LOGGER.info(() -> String.valueOf(r1.getCurrent()));
 		assertTrue(Math.abs(r1.getCurrent()) > 0.001);
 	}
+	
+	
 
 }

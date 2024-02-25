@@ -5,8 +5,8 @@ package xyz.kpzip.kspice.component.switches;
 
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.circuit.Circuit.ConnectionPoint;
-import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
+import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * 
@@ -74,9 +74,10 @@ public class SPDTSwitch implements Component, Switch {
 		return 1;
 	}
 
+	//TODO make this not have different return values to comply with component specification
 	@Override
 	public ConnectionPointPair[] connections() {
-		return new ConnectionPointPair[] {new ConnectionPointPair(switchConnector, on ? normallyOpen : normallyClosed)};
+		return new ConnectionPointPair[] {new ConnectionPointPair(switchConnector, on ? normallyOpen : normallyClosed, this)};
 	}
 
 	@Override

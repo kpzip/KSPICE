@@ -1,7 +1,7 @@
 package xyz.kpzip.kspice.component;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
+import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component with 2 connections.
@@ -60,7 +60,7 @@ public abstract class Abstract2NodeComponent implements Component {
 	
 	@Override
 	public final ConnectionPointPair[] connections() {
-		return new ConnectionPointPair[] {new ConnectionPointPair(first, second)};
+		return new ConnectionPointPair[] {new ConnectionPointPair(first, second, this)};
 	}
 	
 	@Override
