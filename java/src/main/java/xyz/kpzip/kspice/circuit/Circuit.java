@@ -2,6 +2,7 @@ package xyz.kpzip.kspice.circuit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -27,12 +28,14 @@ import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 public sealed class Circuit permits Subcircuit {
 	
 	public static boolean DEBUG = false;
+	private static int idCounter = 0;
 	
 	//Nodes should always be in ascending order with no gaps e.g. 0,1,2,3,4,5 NOT 0,2,3,5,6,7,9
 	//Positive Current is determined to flow from high id nodes to low id nodes
 	protected TreeSet<ConnectionPoint> connectionPoints;
 	protected ArrayList<Component> components;
 	private ConnectionPoint ground;
+	private int id;
 	private int connectionPointIndex = 1;
 	
 	public Circuit() {
@@ -50,6 +53,7 @@ public sealed class Circuit permits Subcircuit {
 		else {
 			ground = null;
 		}
+		this.id = idCounter++;
 	}
 	
 	public void simulationStep(double dt) {
@@ -171,6 +175,8 @@ public sealed class Circuit permits Subcircuit {
 	
 	public void addComponent(Component c) {
 		components.add(c);
+		Collection<? extends ConnectionPoint> p;
+		if ((p = c.getSubConnectionPoints()) != null) connectionPoints.addAll(p);
 	}
 	
 	public Circuit.ConnectionPoint createConnectionPoint() {
@@ -256,12 +262,14 @@ public sealed class Circuit permits Subcircuit {
 			return id;
 		}
 
+		/**
+		 * @implNote Compares first by circuit id, and secondly by connection point id. This is done to make Subcircuits work.
+		 */
 		@Override
 		public int compareTo(ConnectionPoint o) {
-			return this.id - o.id;
+			return this.getEnclosingInstance() == o.getEnclosingInstance() ? this.id - o.id : 
+				this.getEnclosingInstance().id - o.getEnclosingInstance().id;
 		}
-		
-		
 		
 		@Override
 		public int hashCode() {

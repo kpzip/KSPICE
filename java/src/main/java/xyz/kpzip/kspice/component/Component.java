@@ -1,5 +1,8 @@
 package xyz.kpzip.kspice.component;
 
+import java.util.Collection;
+
+import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
@@ -61,7 +64,15 @@ public interface Component {
 	 * @implNote does nothing by default.
 	 * @param dt - the time elapsed in the previous simulation step.
 	 */
-	default void differential(double dt) {};
+	default void differential(final double dt) {};
+	
+	/**
+	 * Used to get the internal connection points of a subcircuit.
+	 * @return a collection of all of this components internal connection points, or null if it does not contain any.
+	 */
+	default Collection<? extends Circuit.ConnectionPoint> getSubConnectionPoints() {
+		return null;
+	}
 
 	/**
 	 * Resets this component. Should set the current to 0 and resent any time varying values to their defaults.

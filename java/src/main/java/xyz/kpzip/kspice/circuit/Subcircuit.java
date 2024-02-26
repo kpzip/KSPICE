@@ -1,16 +1,22 @@
 package xyz.kpzip.kspice.circuit;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import xyz.kpzip.kspice.component.Component;
+import xyz.kpzip.kspice.optimizer.OptimizeableComponent;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 import xyz.kpzip.kspice.util.ArrayUtil;
 import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
-public non-sealed class Subcircuit extends Circuit implements Component {
+public abstract non-sealed class Subcircuit extends Circuit implements Component, OptimizeableComponent {
 
 	//Don't create a ground node
-	public Subcircuit() {
+	/**
+	 * Creates a new subcircuit by creating a new circuit with no ground node.
+	 * @implSpec implementing classes MUST call build(); at the end of the constructor.
+	 */
+	protected Subcircuit() {
 		super(false);
 	}
 
@@ -83,5 +89,30 @@ public non-sealed class Subcircuit extends Circuit implements Component {
 			c.updateCurrent(Arrays.copyOfRange(currents, valPtr, valPtr += c.connectionCount()));
 		}
 	}
+	
+	/**
+	 * @implNote simply calls super.reset() since circuit already provides a reset method.
+	 * This method does not need to exist but it is best practice to have it in case method names change.
+	 */
+	@Override
+	public void reset() {
+		super.reset();
+	}
+	
+	@Override
+	public void differential(final double dt) {
+		this.components.forEach((c) -> c.differential(dt));
+	}
+	
+	@Override
+	public Collection<? extends ConnectionPoint> getSubConnectionPoints() {
+		return this.connectionPoints;
+	}
+	
+	/**
+	 * Builds this subcircuit, creating connection points and components and adding them to this.
+	 */
+	protected abstract void build();
+	
 
 }

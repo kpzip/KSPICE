@@ -10,7 +10,7 @@ package xyz.kpzip.kspice.component.switches;
 public interface Switch {
 	
 	/**
-	 * @return wheather or not this switch is on
+	 * @return whether or not this switch is on
 	 */
 	boolean isOn();
 	
@@ -18,7 +18,9 @@ public interface Switch {
 	 * Toggles the state of the switch. If the switch was off, it will now be on, and vice versa.<br><br>
 	 * "I tried to switch to decaf, but it made me even more wired."
 	 */
-	void toggle();
+	default void toggle() {
+		setOn(!isOn());
+	}
 	
 	/**
 	 * sets the state of the switch
@@ -29,11 +31,15 @@ public interface Switch {
 	/**
 	 * Turns this switch on, having no effect if it was already on.
 	 */
-	void setOn();
+	default void setOn() {
+		setOn(true);
+	}
 	
 	/**
 	 * Turns this switch off, having no effect if it was already off.
 	 */
-	void setOff();
+	default void setOff()  {
+		setOn(false);
+	}
 
 }

@@ -43,23 +43,8 @@ public class SPSTSwitch extends Abstract2NodeComponent implements Switch {
 	}
 	
 	@Override
-	public void toggle() {
-		on ^= on;
-	}
-	
-	@Override
 	public void setOn(boolean on) {
 		this.on = on;
-	}
-	
-	@Override
-	public void setOn() {
-		this.on = true;
-	}
-	
-	@Override
-	public void setOff() {
-		this.on = false;
 	}
 
 }
