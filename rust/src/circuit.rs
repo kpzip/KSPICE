@@ -39,7 +39,7 @@ impl<'a> Circuit<'a> {
         circuit
     }
 
-    fn new_connection_point(circuit: &'a Arc<Circuit<'a>>) -> &'a ConnectionPoint<'a> {
+    pub fn new_connection_point(circuit: &'a Arc<Circuit<'a>>) -> &'a ConnectionPoint<'a> {
         circuit
             .connection_points
             .lock()
@@ -47,10 +47,23 @@ impl<'a> Circuit<'a> {
             .insert(ConnectionPoint::new(circuit.clone()));
         //unsafe block here bypasses the Mutex on connection_points. This is fine since this is a
         //read only reference, and it is guaranteed to not live longer than at least one Arc<Circuit>
-        unsafe {
+        /*unsafe {
             &*(circuit.connection_points.lock().unwrap().last().unwrap()
                 as *const ConnectionPoint<'a>)
-        }
+        }*/
+        circuit.connection_points.lock().unwrap().last().take().unwrap()
+    }
+
+    pub fn get_ground(&self) -> &'a ConnectionPoint<'a> {
+        self.ground.unwrap()
+    }
+
+    pub fn add_component(&mut self, component: Box<dyn Component>) {
+        self.components.lock().unwrap().push(component);
+    }
+
+    pub fn simulation_step(&mut self, dt: f64) {
+
     }
 }
 
