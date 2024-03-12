@@ -2,8 +2,8 @@ use crate::circuit::ConnectionPoint;
 use crate::components::component::Component;
 
 pub struct TwoNodeComponentBase<'a> {
-    first: &'a ConnectionPoint<'a>,
-    second: &'a ConnectionPoint<'a>,
+    first: &'a ConnectionPoint,
+    second: &'a ConnectionPoint,
     current: f64,
 }
 
@@ -20,8 +20,8 @@ impl<'a> TwoNodeComponentBase<'a> {
     }
 
     #[inline]
-    pub const fn connections(&self) -> [(&'a ConnectionPoint<'a>, &'a ConnectionPoint<'a>, &dyn Component); 1] {
-        [(self.first, self.second, self)]
+    pub const fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
+        Box::new([(self.first, self.second, self)])
     }
 
     #[inline]
@@ -34,7 +34,7 @@ impl<'a> TwoNodeComponentBase<'a> {
         self.current = 0.0;
     }
 
-    pub fn new(first: &'a ConnectionPoint<'a>, second: &'a ConnectionPoint<'a>) -> TwoNodeComponentBase {
+    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint) -> TwoNodeComponentBase<'a> {
         TwoNodeComponentBase {
             first,
             second,

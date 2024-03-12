@@ -8,7 +8,7 @@ pub struct HeapArray<T> {
 }
 
 impl<T> HeapArray<T> {
-    pub fn new<T>(size: usize) -> HeapArray<T> {
+    pub fn new(size: usize) -> HeapArray<T> {
         if size == 0 { todo!() }
         unsafe {
             let layout: Layout = Layout::from_size_align_unchecked(mem::size_of::<T>() * size, mem::align_of::<T>());
@@ -52,6 +52,7 @@ impl<T> DerefMut for HeapArray<T> {
     }
 }
 
+/*
 impl<'a, T> Index<usize> for HeapArray<T> {
     type Output = Option<&'a T>;
 
@@ -76,3 +77,4 @@ impl<T> IndexMut<usize> for HeapArray<T> {
         }
     }
 }
+*/

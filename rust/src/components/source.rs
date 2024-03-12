@@ -7,7 +7,7 @@ pub struct Battery<'a> {
     emf: f64,
 }
 
-impl<'a> Component for Battery<'a> {
+impl<'a> Component<'a> for Battery<'a> {
     fn connection_point_count(&self) -> u32 {
         self.base.connection_point_count()
     }
@@ -16,13 +16,13 @@ impl<'a> Component for Battery<'a> {
         self.base.connection_count()
     }
 
-    fn connections(&self) -> [(&'a ConnectionPoint<'a>, &'a ConnectionPoint<'a>, &dyn Component); 1] {
+    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
         self.base.connections()
     }
 
     //Update this to negate emf in the constructor
-    fn constraints(&self) -> [f64; 3] {
-        [0.0, 1.0, self.base.reversed_multiplier() * self.emf]
+    fn constraints(&self) -> Box<[f64]> {
+        Box::new([0.0, 1.0, self.base.reversed_multiplier() * self.emf])
     }
 
     fn update_current(&mut self, currents: Vec<f64>) {
@@ -35,7 +35,7 @@ impl<'a> Component for Battery<'a> {
 }
 
 impl<'a> Battery<'a> {
-    pub fn new(first: &'a ConnectionPoint<'a>, second: &'a ConnectionPoint<'a>, emf: f64) -> Battery {
+    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, emf: f64) -> Battery<'a> {
         Battery {
             base: TwoNodeComponentBase::new(first, second),
             emf,

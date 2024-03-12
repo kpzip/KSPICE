@@ -7,7 +7,7 @@ pub struct Resistor<'a> {
     resistance: f64,
 }
 
-impl<'a> Component for Resistor<'a> {
+impl<'a> Component<'a> for Resistor<'a> {
     fn connection_point_count(&self) -> u32 {
         self.base.connection_count()
     }
@@ -16,12 +16,12 @@ impl<'a> Component for Resistor<'a> {
         self.base.connection_point_count()
     }
 
-    fn connections(&self) -> [(&'a ConnectionPoint<'a>, &'a ConnectionPoint<'a>, &dyn Component); 1] {
+    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
         self.base.connections()
     }
 
-    fn constraints(&self) -> [f64; 3] {
-        [self.resistance, -1.0, 0.0]
+    fn constraints(&self) -> Box<[f64]> {
+        Box::new([self.resistance, -1.0, 0.0])
     }
 
     fn update_current(&mut self, currents: Vec<f64>) {
@@ -35,7 +35,7 @@ impl<'a> Component for Resistor<'a> {
 }
 
 impl<'a> Resistor<'a> {
-    pub fn new(first: &'a ConnectionPoint<'a>, second: &'a ConnectionPoint<'a>, resistance: f64) -> Resistor {
+    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, resistance: f64) -> Resistor<'a> {
         Resistor {
             base: TwoNodeComponentBase::new(first, second),
             resistance,
@@ -53,7 +53,7 @@ pub struct Capacitor<'a> {
     charge: f64,
 }
 
-impl<'a> Component for Capacitor<'a> {
+impl<'a> Component<'a> for Capacitor<'a> {
     fn connection_point_count(&self) -> u32 {
         self.base.connection_count()
     }
@@ -62,12 +62,12 @@ impl<'a> Component for Capacitor<'a> {
         self.base.connection_point_count()
     }
 
-    fn connections(&self) -> [(&'a ConnectionPoint<'a>, &'a ConnectionPoint<'a>, &dyn Component); 1] {
+    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
         self.base.connections()
     }
 
-    fn constraints(&self) -> [f64; 3] {
-        [0.0, self.capacitance, self.charge]
+    fn constraints(&self) -> Box<[f64]> {
+        Box::new([0.0, self.capacitance, self.charge])
     }
 
     fn update_current(&mut self, currents: Vec<f64>) {
@@ -86,7 +86,7 @@ impl<'a> Component for Capacitor<'a> {
 }
 
 impl<'a> Capacitor<'a> {
-    pub fn new(first: &'a ConnectionPoint<'a>, second: &'a ConnectionPoint<'a>, capacitance: f64) -> Capacitor {
+    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, capacitance: f64) -> Capacitor<'a> {
         Capacitor {
             base: TwoNodeComponentBase::new(first, second),
             capacitance,
