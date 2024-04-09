@@ -1,7 +1,7 @@
 package xyz.kpzip.kspice.component;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component with 2 connections.

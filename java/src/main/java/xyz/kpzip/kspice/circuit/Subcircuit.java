@@ -3,11 +3,12 @@ package xyz.kpzip.kspice.circuit;
 import java.util.Arrays;
 import java.util.Collection;
 
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.optimizer.OptimizeableComponent;
 import xyz.kpzip.kspice.util.ArrayBuilder;
 import xyz.kpzip.kspice.util.ArrayUtil;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
+import xyz.kpzip.kspice.util.ImmutableCollectionWrapper;
 
 public abstract non-sealed class Subcircuit extends Circuit implements Component, OptimizeableComponent {
 
@@ -106,7 +107,7 @@ public abstract non-sealed class Subcircuit extends Circuit implements Component
 	
 	@Override
 	public Collection<? extends ConnectionPoint> getSubConnectionPoints() {
-		return this.connectionPoints;
+		return ImmutableCollectionWrapper.of(this.connectionPoints);
 	}
 	
 	/**

@@ -1,8 +1,8 @@
 package xyz.kpzip.kspice.component.semiconductor;
 
 import xyz.kpzip.kspice.circuit.Circuit;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 public abstract class AbstractTransistor implements Component {
 	

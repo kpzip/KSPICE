@@ -3,7 +3,7 @@ package xyz.kpzip.kspice.component;
 import java.util.Collection;
 
 import xyz.kpzip.kspice.circuit.Circuit;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents a component in a logical circuit designed for constraint solving.

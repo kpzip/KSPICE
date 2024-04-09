@@ -17,7 +17,6 @@ public final class UnitParser {
 	private UnitParser() {}
 	
 	private static final Map<String, Double> MODIFIERS = new HashMap<String, Double>();
-
 	
 	static {
 		
@@ -109,7 +108,5 @@ outter:	for (; ptr < input.length(); ptr++) {
 		
 		return number;
 	}
-	
-	
 
 }

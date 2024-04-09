@@ -73,7 +73,7 @@ public class Capacitor extends Abstract2NodeComponent {
 	 */
 	@Override
 	public void differential(double dt) {
-		this.charge += this.getCurrent() * dt;
+		this.charge += this.isReversed() ? this.current * dt : -this.current * dt;
 	}
 	
 	/**

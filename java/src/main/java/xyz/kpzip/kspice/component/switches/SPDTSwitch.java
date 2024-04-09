@@ -5,8 +5,8 @@ package xyz.kpzip.kspice.component.switches;
 
 import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.circuit.Circuit.ConnectionPoint;
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * 

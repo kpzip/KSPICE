@@ -1,11 +1,10 @@
-package xyz.kpzip.kspice.util;
+package xyz.kpzip.kspice.circuit;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import xyz.kpzip.kspice.circuit.Circuit;
 import xyz.kpzip.kspice.component.Component;
 
 /**

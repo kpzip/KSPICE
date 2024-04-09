@@ -6,16 +6,16 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.TreeSet;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.DecompositionSolver;
-import org.apache.commons.math3.linear.LUDecomposition;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math4.legacy.linear.Array2DRowRealMatrix;
+import org.apache.commons.math4.legacy.linear.ArrayRealVector;
+import org.apache.commons.math4.legacy.linear.DecompositionSolver;
+import org.apache.commons.math4.legacy.linear.LUDecomposition;
+import org.apache.commons.math4.legacy.linear.RealMatrix;
+import org.apache.commons.math4.legacy.linear.RealVector;
 
+import xyz.kpzip.kspice.circuit.CircuitUtil.ConnectionPointPair;
 import xyz.kpzip.kspice.component.Component;
 import xyz.kpzip.kspice.util.ArrayBuilder;
-import xyz.kpzip.kspice.util.CircuitUtil.ConnectionPointPair;
 
 /**
  * Represents an electronic circuit.
@@ -42,7 +42,7 @@ public sealed class Circuit permits Subcircuit {
 		this(true);
 	}
 	
-	//Constructor to allow 
+	//Constructor to allow ground or not
 	protected Circuit(boolean gnd) {
 		connectionPoints = new TreeSet<ConnectionPoint>();
 		components = new ArrayList<Component>();

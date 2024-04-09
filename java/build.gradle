@@ -10,13 +10,13 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
     id 'eclipse'
+    
 }
 
 archivesBaseName = project.archives_base_name
 version = project.version
 
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
@@ -26,7 +26,7 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
     // Math Library
-    implementation "org.apache.commons:commons-math3:${project.apache_commons_math_version}"
+    implementation "org.apache.commons:commons-math4-legacy:${project.apache_commons_math_version}"
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
