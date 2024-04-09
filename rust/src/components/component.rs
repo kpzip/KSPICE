@@ -1,12 +1,13 @@
+use std::sync::Arc;
 use crate::circuit::ConnectionPoint;
 
 //Requires send and sync since components need to be shared amongst threads
-pub trait Component<'a>: Send + Sync {
-    fn connection_point_count(&self) -> u32;
+pub trait Component: Send + Sync {
+    fn connection_point_count(&self) -> usize;
 
-    fn connection_count(&self) -> u32;
+    fn connection_count(&self) -> usize;
 
-    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]>;
+    fn connections<'b>(&'b self) -> Box<[(Arc<ConnectionPoint>, Arc<ConnectionPoint>, &'b dyn Component)]>;
 
     fn constraints(&self) -> Box<[f64]>;
 

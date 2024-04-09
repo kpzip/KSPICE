@@ -1,23 +1,24 @@
+use std::sync::Arc;
 use crate::circuit::ConnectionPoint;
 use crate::components::base::TwoNodeComponentBase;
 use crate::components::component::Component;
 
-pub struct Resistor<'a> {
-    base: TwoNodeComponentBase<'a>,
+pub struct Resistor {
+    base: TwoNodeComponentBase,
     resistance: f64,
 }
 
-impl<'a> Component<'a> for Resistor<'a> {
-    fn connection_point_count(&self) -> u32 {
+impl Component for Resistor {
+    fn connection_point_count(&self) -> usize {
         self.base.connection_count()
     }
 
-    fn connection_count(&self) -> u32 {
+    fn connection_count(&self) -> usize {
         self.base.connection_point_count()
     }
 
-    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
-        self.base.connections()
+    fn connections<'b>(&'b self) -> Box<[(Arc<ConnectionPoint>, Arc<ConnectionPoint>, &'b dyn Component)]> {
+        self.base.connections(self)
     }
 
     fn constraints(&self) -> Box<[f64]> {
@@ -34,8 +35,8 @@ impl<'a> Component<'a> for Resistor<'a> {
 
 }
 
-impl<'a> Resistor<'a> {
-    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, resistance: f64) -> Resistor<'a> {
+impl Resistor {
+    pub fn new(first: &Arc<ConnectionPoint>, second: &Arc<ConnectionPoint>, resistance: f64) -> Resistor {
         Resistor {
             base: TwoNodeComponentBase::new(first, second),
             resistance,
@@ -47,23 +48,23 @@ impl<'a> Resistor<'a> {
     }
 }
 
-pub struct Capacitor<'a> {
-    base: TwoNodeComponentBase<'a>,
+pub struct Capacitor {
+    base: TwoNodeComponentBase,
     capacitance: f64,
     charge: f64,
 }
 
-impl<'a> Component<'a> for Capacitor<'a> {
-    fn connection_point_count(&self) -> u32 {
+impl Component for Capacitor {
+    fn connection_point_count(&self) -> usize {
         self.base.connection_count()
     }
 
-    fn connection_count(&self) -> u32 {
+    fn connection_count(&self) -> usize {
         self.base.connection_point_count()
     }
 
-    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
-        self.base.connections()
+    fn connections<'b>(&'b self) -> Box<[(Arc<ConnectionPoint>, Arc<ConnectionPoint>, &'b dyn Component)]> {
+        self.base.connections(self)
     }
 
     fn constraints(&self) -> Box<[f64]> {
@@ -85,8 +86,8 @@ impl<'a> Component<'a> for Capacitor<'a> {
 
 }
 
-impl<'a> Capacitor<'a> {
-    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, capacitance: f64) -> Capacitor<'a> {
+impl Capacitor {
+    pub fn new(first: &Arc<ConnectionPoint>, second: &Arc<ConnectionPoint>, capacitance: f64) -> Capacitor {
         Capacitor {
             base: TwoNodeComponentBase::new(first, second),
             capacitance,

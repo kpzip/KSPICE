@@ -1,23 +1,24 @@
+use std::sync::Arc;
 use crate::circuit::ConnectionPoint;
 use crate::components::base::TwoNodeComponentBase;
 use crate::components::component::Component;
 
-pub struct Battery<'a> {
-    base: TwoNodeComponentBase<'a>,
+pub struct Battery {
+    base: TwoNodeComponentBase,
     emf: f64,
 }
 
-impl<'a> Component<'a> for Battery<'a> {
-    fn connection_point_count(&self) -> u32 {
+impl Component for Battery {
+    fn connection_point_count(&self) -> usize {
         self.base.connection_point_count()
     }
 
-    fn connection_count(&self) -> u32 {
+    fn connection_count(&self) -> usize {
         self.base.connection_count()
     }
 
-    fn connections(&self) -> Box<[(&'a ConnectionPoint, &'a ConnectionPoint, &dyn Component)]> {
-        self.base.connections()
+    fn connections<'b>(&'b self) -> Box<[(Arc<ConnectionPoint>, Arc<ConnectionPoint>, &'b dyn Component)]> {
+        self.base.connections(self)
     }
 
     //Update this to negate emf in the constructor
@@ -34,8 +35,8 @@ impl<'a> Component<'a> for Battery<'a> {
     }
 }
 
-impl<'a> Battery<'a> {
-    pub fn new(first: &'a ConnectionPoint, second: &'a ConnectionPoint, emf: f64) -> Battery<'a> {
+impl Battery {
+    pub fn new(first: &Arc<ConnectionPoint>, second: &Arc<ConnectionPoint>, emf: f64) -> Battery {
         Battery {
             base: TwoNodeComponentBase::new(first, second),
             emf,

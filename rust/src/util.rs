@@ -1,80 +1,116 @@
-use std::alloc::{alloc, dealloc, Layout};
-use std::mem;
-use std::ops::{Deref, DerefMut, Index, IndexMut};
+use std::slice::Iter;
 
-pub struct HeapArray<T> {
-    pointer: *mut T,
-    size: usize,
+pub struct ArrayBuilder<T> {
+    arrays: Vec<Box<[T]>>,
 }
 
-impl<T> HeapArray<T> {
-    pub fn new(size: usize) -> HeapArray<T> {
-        if size == 0 { todo!() }
-        unsafe {
-            let layout: Layout = Layout::from_size_align_unchecked(mem::size_of::<T>() * size, mem::align_of::<T>());
-            let pointer: *mut T = alloc(layout);
-            HeapArray {
-                pointer,
-                size,
+impl<T> ArrayBuilder<T> {
+
+    pub fn new() -> ArrayBuilder<T> {
+        ArrayBuilder {
+            arrays: Vec::new(),
+        }
+    }
+
+    pub fn with_capacity(size: usize) -> ArrayBuilder<T> {
+        ArrayBuilder {
+            arrays: Vec::with_capacity(size),
+        }
+    }
+
+    pub fn push_array(&mut self, arr: Box<[T]>) {
+        self.arrays.push(arr);
+    }
+
+    pub fn to_array(self) -> Box<[T]> {
+        let size: usize = self.arrays.iter().map(|a| a.len()).sum();
+        let mut ret = Box::new([]);
+
+
+
+        ret
+    }
+
+    pub fn iter(&self) -> ArrayBuilderIter<T> {
+        self.into_iter()
+    }
+}
+
+impl<T: Clone> IntoIterator for ArrayBuilder<T> {
+    type Item = T;
+    type IntoIter = ArrayBuilderIntoIter<T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        ArrayBuilderIntoIter {
+            array_builder: self,
+            array_num: 0,
+            array_index: 0,
+        }
+    }
+}
+
+impl<'a, T> IntoIterator for &'a ArrayBuilder<T> {
+    type Item = &'a T;
+    type IntoIter = ArrayBuilderIter<'a, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        ArrayBuilderIter {
+            array_builder: self,
+            array_num: 0,
+            array_index: 0,
+        }
+    }
+
+}
+
+pub struct ArrayBuilderIter<'a, T> {
+    array_builder: &'a ArrayBuilder<T>,
+    array_num: usize,
+    array_index: usize,
+}
+
+pub struct ArrayBuilderIntoIter<T> {
+    array_builder: ArrayBuilder<T>,
+    array_num: usize,
+    array_index: usize,
+}
+
+impl<'a, T> Iterator for ArrayBuilderIter<'a, T> {
+    type Item = &'a T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            match self.array_builder.arrays.get(self.array_num) {
+                None => return None,
+                Some(arr) => {
+                    if self.array_index < arr.len() {
+                        self.array_index += 1;
+                        return Some(&self.array_builder.arrays[self.array_num][self.array_index]);
+                    }
+                    self.array_num += 1;
+                    self.array_index = 0;
+                }
             }
         }
     }
-
-    pub unsafe fn index_unchecked(&self, index: usize) -> &T {
-        &*((self.pointer as usize + index) as *mut T)
-    }
-
-    pub unsafe fn index_mut_unchecked(&mut self, index: usize) -> &mut T {
-        &mut *((self.pointer as usize + index) as *mut T)
-    }
 }
 
-impl<T> Drop for HeapArray<T> {
-    fn drop(&mut self) {
-        unsafe {
-            let layout: Layout = Layout::from_size_align_unchecked(mem::size_of::<T>() * self.size, mem::align_of::<T>());
-            dealloc(self.pointer, layout);
+impl<T: Clone> Iterator for ArrayBuilderIntoIter<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            match self.array_builder.arrays.get(self.array_num) {
+                None => return None,
+                Some(arr) => {
+                    if self.array_index < arr.len() {
+                        self.array_index += 1;
+                        return Some(self.array_builder.arrays[self.array_num][self.array_index].clone());
+                    }
+                    self.array_num += 1;
+                    self.array_index = 0;
+                }
+            }
         }
     }
 }
-
-impl<T> Deref for HeapArray<T> {
-    type Target = T;
-
-    fn deref(&self) -> &Self::Target {
-        unsafe { &*self.pointer }
-    }
-}
-
-impl<T> DerefMut for HeapArray<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        unsafe { &mut*self.pointer }
-    }
-}
-
-/*
-impl<'a, T> Index<usize> for HeapArray<T> {
-    type Output = Option<&'a T>;
-
-    fn index(&self, index: usize) -> Self::Output {
-        if index >= self.size {
-            None
-        }
-        unsafe {
-            Some(&*((self.pointer as usize + index) as *const T))
-        }
-    }
-}
-
-impl<T> IndexMut<usize> for HeapArray<T> {
-
-    fn index_mut(&mut self, index: usize) -> Self::Output {
-        if index >= self.size {
-            None
-        }
-        unsafe {
-            Some(&mut *((self.pointer as usize + index) as *mut T))
-        }
-    }
-}
-*/
