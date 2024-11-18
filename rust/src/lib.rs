@@ -22,7 +22,6 @@ mod tests {
 
         c.add_component(battery);
 
-
         c.simulation_step(0.1);
 
         //assert_eq!(res.get_current(), 1.0);
